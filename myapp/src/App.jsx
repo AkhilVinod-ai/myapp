@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { Authenticator } from '@aws-amplify/ui-react'
+import '@aws-amplify/ui-react/styles.css'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-function App() {
+function AppContent() {
   const [count, setCount] = useState(0)
 
   return (
@@ -29,6 +31,38 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
+  )
+}
+
+function App() {
+  return (
+    <Authenticator>
+      {({ signOut, user }) => (
+        <div>
+          {user && (
+            <div style={{ position: 'absolute', top: 10, right: 10 }}>
+              <p style={{ color: '#fff', margin: '0 0 10px 0' }}>
+                Welcome, {user.username}!
+              </p>
+              <button
+                onClick={signOut}
+                style={{
+                  padding: '0.5em 1em',
+                  background: '#ff6b6b',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                }}
+              >
+                Sign out
+              </button>
+            </div>
+          )}
+          <AppContent />
+        </div>
+      )}
+    </Authenticator>
   )
 }
 
